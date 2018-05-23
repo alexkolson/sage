@@ -1,5 +1,6 @@
 class Article < ApplicationRecord
-  before_save  :translate
+  validates :question, :answer, presence: true
+  before_save :translate
 
   def translate
     key = ENV['MS_TRANSLATE_KEY']
