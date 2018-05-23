@@ -1,7 +1,5 @@
 class Article < ApplicationRecord
-  attr_accessor :translated_question, :translated_answer
-
-  after_initialize  :translate
+  before_save  :translate
 
   def translate
     key = ENV['MS_TRANSLATE_KEY']
