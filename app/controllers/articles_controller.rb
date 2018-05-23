@@ -20,9 +20,7 @@ class ArticlesController < ApplicationController
     
     uri = URI(host + path + params)
     
-    text = @article.answer
-    
-    content = '[{"Text" : "' + text + '"}]'
+    content = '[{"Text" : "' + @article.question + '"},{"Text" : "' + @article.answer + '"}]'
     
     request = Net::HTTP::Post.new(uri)
     request['Content-type'] = 'application/json'
@@ -42,7 +40,8 @@ class ArticlesController < ApplicationController
     json = JSON.pretty_generate(translatedGoodieBag)
     puts json 
 
-    @germanAnswer = translatedGoodieBag[0]['translations'][0]['text']
+    @germanQuestion = translatedGoodieBag[0]['translations'][0]['text']
+    @germanAnswer = translatedGoodieBag[1]['translations'][0]['text']
   end
 
   # GET /articles/new
