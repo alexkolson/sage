@@ -10,38 +10,6 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.json
   def show
-    key = ENV['MS_TRANSLATE_KEY']
-
-    host = ENV['MS_TRANSLATE_HOST']
-    path = '/translate?api-version=3.0'
-    
-    # Translate to German and Italian.
-    params = '&to=de'
-    
-    uri = URI(host + path + params)
-    
-    content = '[{"Text" : "' + @article.question + '"},{"Text" : "' + @article.answer + '"}]'
-    
-    request = Net::HTTP::Post.new(uri)
-    request['Content-type'] = 'application/json'
-    request['Content-length'] = content.length
-    request['Ocp-Apim-Subscription-Key'] = key
-    request['X-ClientTraceId'] = SecureRandom.uuid
-    request.body = content
-    
-    response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-        http.request (request)
-    end
-    
-    result = response.body.force_encoding("utf-8")
-
-    translatedGoodieBag = JSON.parse(result)
-
-    json = JSON.pretty_generate(translatedGoodieBag)
-    puts json 
-
-    @germanQuestion = translatedGoodieBag[0]['translations'][0]['text']
-    @germanAnswer = translatedGoodieBag[1]['translations'][0]['text']
   end
 
   # GET /articles/new

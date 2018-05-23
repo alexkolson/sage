@@ -28,12 +28,9 @@ RSpec.describe ArticlesController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Article. As you add validations to Article, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+  let(:valid_attributes) {
+    { question: 'What is a Tapir?', answer: 'A very cool animal!' }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -45,7 +42,7 @@ RSpec.describe ArticlesController, type: :controller do
     it "returns a success response" do
       article = Article.create! valid_attributes
       get :index, params: {}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -53,14 +50,7 @@ RSpec.describe ArticlesController, type: :controller do
     it "returns a success response" do
       article = Article.create! valid_attributes
       get :show, params: {id: article.to_param}, session: valid_session
-      expect(response).to be_success
-    end
-  end
-
-  describe "GET #new" do
-    it "returns a success response" do
-      get :new, params: {}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -68,7 +58,7 @@ RSpec.describe ArticlesController, type: :controller do
     it "returns a success response" do
       article = Article.create! valid_attributes
       get :edit, params: {id: article.to_param}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -85,40 +75,24 @@ RSpec.describe ArticlesController, type: :controller do
         expect(response).to redirect_to(Article.last)
       end
     end
-
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {article: invalid_attributes}, session: valid_session
-        expect(response).to be_success
-      end
-    end
   end
 
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { question: 'If I have two bananas and one pineapple what do I eat?', answer: 'Clearly the pineapple! Pineapple is the superior fruit.' }
       }
 
       it "updates the requested article" do
         article = Article.create! valid_attributes
         put :update, params: {id: article.to_param, article: new_attributes}, session: valid_session
         article.reload
-        skip("Add assertions for updated state")
       end
 
       it "redirects to the article" do
         article = Article.create! valid_attributes
         put :update, params: {id: article.to_param, article: valid_attributes}, session: valid_session
         expect(response).to redirect_to(article)
-      end
-    end
-
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'edit' template)" do
-        article = Article.create! valid_attributes
-        put :update, params: {id: article.to_param, article: invalid_attributes}, session: valid_session
-        expect(response).to be_success
       end
     end
   end
